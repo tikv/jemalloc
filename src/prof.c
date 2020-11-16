@@ -86,7 +86,7 @@ enum prof_logging_state_e {
  */
 prof_logging_state_t prof_logging_state = prof_logging_state_stopped;
 
-bool prof_logging_final_hook_registerred = false;
+bool prof_logging_final_hook_registered = false;
 
 #ifdef JEMALLOC_JET
 static bool prof_log_dummy = false;
@@ -2552,7 +2552,7 @@ prof_log_start(tsdn_t *tsdn, const char *filename) {
 		nstime_update(&log_start_timestamp);
 	}
 	
-	if (!prof_logging_final_hook_registerred) {
+	if (!prof_logging_final_hook_registered) {
 		if (atexit(prof_log_stop_final) != 0) {
 			malloc_write("<jemalloc>: Error in atexit() "
 				     "for logging\n");
@@ -2560,7 +2560,7 @@ prof_log_start(tsdn_t *tsdn, const char *filename) {
 				abort();
 			}
 		} else {
-			prof_logging_final_hook_registerred = true;
+			prof_logging_final_hook_registered = true;
 		}
 	}
 
